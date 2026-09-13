@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/aqua-yaml.json
+# aqua - Declarative CLI Version Manager
+# https://aquaproj.github.io/
+# checksum:
+#   enabled: true
+#   require_checksum: true
+#   supported_envs:
+#   - all
+registries:
+  - type: standard
+    ref: semver(">= 4.0.0")
+  - name: local/nimlangserver
+    type: local
+    path: ./registry-nimlangserver.yaml
+  - name: local/nph
+    type: local
+    path: ./registry-nph.yaml
+packages:
+  - registry: standard
+  - registry: local/nimlangserver
+  - registry: local/nph

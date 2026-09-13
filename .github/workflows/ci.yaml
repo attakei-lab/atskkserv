@@ -1,0 +1,81 @@
+---
+name: 'Run CI jobs'
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        nim-version:
+          - '2.2.0'
+    steps:
+      - uses: actions/checkout@v6
+      - uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0  # v4.0.0
+        with:
+          aqua_version: v2.57.1
+          policy_allow: 'true'
+      - name: 'Cache Nim resources'
+        id: cache_nim
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.choosenim
+            ~/.nimble
+          key: 'nimcaches_ubuntu-latest_${{ matrix.nim-version }}'
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: '${{ matrix.nim-version }}'
+      - name: Set up workspace
+        run: |
+          task --yes setup-ci
+      - name: Lint by lefthook
+        run: |
+          lefthook run pre-commit --all-files
+  code-test:
+    needs: ['lint']
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        nim-version:
+          - '2.2.0'
+          - '2.2.12'
+    steps:
+      - uses: actions/checkout@v6
+      - name: 'Cache Nim resources'
+        id: cache_nim
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.choosenim
+            ~/.nimble
+          key: 'nimcaches_ubuntu-latest_${{ matrix.nim-version }}'
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: '${{ matrix.nim-version }}'
+      - name: 'Run unittests'
+        run: |
+          nimble test -Y
+  docs-test:
+    needs: ['lint']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0  # v4.0.0
+        with:
+          aqua_version: v2.57.1
+          policy_allow: 'true'
+      - name: Configure venv
+        run: |
+          uv sync --frozen
+      - name: Build document
+        run: |
+          task --yes docs:build-linkcheck docs:build-dirhtml

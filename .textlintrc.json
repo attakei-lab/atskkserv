@@ -1,0 +1,14 @@
+{
+  "plugins": ["rst"],
+  "rules": {
+    "preset-japanese": {
+      "no-exclamation-question-mark": false,
+      "sentence-length": {
+        "max": 120
+      }
+    }
+  },
+  "filters": {
+    "comments": true
+  }
+}

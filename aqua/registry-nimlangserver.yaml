@@ -1,0 +1,29 @@
+---
+packages:
+  - type: github_release
+    repo_owner: nim-lang
+    repo_name: langserver
+    description: The Nim language server implementation (based on nimsuggest)
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.6.0")
+        asset: nimlangserver-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: "true"
+        asset: nimlangserver-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        files:
+          - name: nimlangserver
+            src: nimlangserver
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz

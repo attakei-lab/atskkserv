@@ -1,0 +1,27 @@
+[project]
+name = "atskkserv"
+version = "0.0.0"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    { include-group = "docs" },
+    { include-group = "lint" },
+]
+docs = [
+    "docutils>=0.22",
+    "sphinx>=9",
+]
+lint = [
+    "rst2txtast>=0.2.0.post1786625040",
+    "rstcheck>=6.3.0",
+]
+
+[tool.uv.sources]
+rst2txtast = { index = "testpypi" }
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+explicit = true

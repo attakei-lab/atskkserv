@@ -1,0 +1,33 @@
+---
+templates:
+  # This hooks require uv to run
+  run_python: 'uv run'
+  run_npm: 'bun run --bun'
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: 'EditorConfig'
+      glob: '*.*'
+      run: 'ec {staged_files}'
+    - name: 'Nim'
+      glob: '*.nim'
+      run: 'nph {staged_files}'
+      stage_fixed: true
+    - name: 'YAML'
+      glob: '*.yaml'
+      run: '{run_python} ryl {staged_files}'
+      stage_fixed: true
+    - name: 'reStructuredText'
+      glob: '*.rst'
+      group:
+        parallel: true
+        jobs:
+          - name: 'syntax-check'
+            run: '{run_python} rstcheck {staged_files}'
+          - name: 'text-check'
+            run: '{run_python} {run_npm} textlint {staged_files}'
+    - name: 'GitHub Actions'
+      glob: '.github/workflows/*.yaml'
+      run: 'actionlint {staged_files}'
+      stage_fixed: true
