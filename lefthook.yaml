@@ -31,3 +31,6 @@ pre-commit:
       glob: '.github/workflows/*.yaml'
       run: 'actionlint {staged_files}'
       stage_fixed: true
+    - name: 'textlint'
+      glob: '*.{md,rst}'
+      run: 'uv run bunx --bun textlint {staged_files}'
