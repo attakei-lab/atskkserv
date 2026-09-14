@@ -8,6 +8,7 @@ dependencies = []
 dev = [
     { include-group = "docs" },
     { include-group = "lint" },
+    { include-group = "test" },
 ]
 docs = [
     "docutils>=0.22",
@@ -16,6 +17,9 @@ docs = [
 lint = [
     "rst2txtast>=0.2.0.post1786625040",
     "rstcheck>=6.3.0",
+]
+test = [
+    "pytest>=9.1.1",
 ]
 
 [tool.uv.sources]

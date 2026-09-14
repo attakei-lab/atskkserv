@@ -1,7 +1,8 @@
-# This is just an example to get you started. A typical hybrid package
-# uses this file as the main entry point of the application.
+## メイン処理の実行と、それにのみ付随する処理
+import std/asyncdispatch
 
-import atskkserv/submodule
+import ./atskkserv/server
 
 when isMainModule:
-  echo(getWelcomeMessage())
+  asyncCheck serve(11178)
+  runForever()
