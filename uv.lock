@@ -38,6 +38,7 @@ source = { virtual = "." }
 dev = [
     { name = "docutils" },
     { name = "pytest" },
+    { name = "random-port" },
     { name = "rst2txtast" },
     { name = "rstcheck" },
     { name = "sphinx" },
@@ -52,6 +53,7 @@ lint = [
 ]
 test = [
     { name = "pytest" },
+    { name = "random-port" },
 ]
 
 [package.metadata]
@@ -60,6 +62,7 @@ test = [
 dev = [
     { name = "docutils", specifier = ">=0.22" },
     { name = "pytest", specifier = ">=9.1.1" },
+    { name = "random-port", specifier = ">=0.0.9" },
     { name = "rst2txtast", specifier = ">=0.2.0.post1786625040", index = "https://test.pypi.org/simple/" },
     { name = "rstcheck", specifier = ">=6.3.0" },
     { name = "sphinx", specifier = ">=9" },
@@ -72,7 +75,10 @@ lint = [
     { name = "rst2txtast", specifier = ">=0.2.0.post1786625040", index = "https://test.pypi.org/simple/" },
     { name = "rstcheck", specifier = ">=6.3.0" },
 ]
-test = [{ name = "pytest", specifier = ">=9.1.1" }]
+test = [
+    { name = "pytest", specifier = ">=9.1.1" },
+    { name = "random-port", specifier = ">=0.0.9" },
+]
 
 [[package]]
 name = "babel"
@@ -391,6 +397,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/e4/47/b9efed96c114afcfa3c9d3fe98a76a1d14c74a9e266d397cf6eb64be5e01/pytest-9.1.1.tar.gz", hash = "sha256:1088fbde8f2b49d95a549a195707afa7a76a3ce9bcadc26b6d71f0ffda5fe313", size = 1636369, upload-time = "2026-06-19T10:58:32.857Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/24/25/1de2678b631f5a49215c6c96fff41ba892b0a34df68d6d80292b1b48aa7f/pytest-9.1.1-py3-none-any.whl", hash = "sha256:37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c", size = 386536, upload-time = "2026-06-19T10:58:31.347Z" },
+]
+
+[[package]]
+name = "random-port"
+version = "0.0.9"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/4e/ab/20982d60247e42d84b077e3b7271a344d26f0a65ab4dea171dafad766685/random_port-0.0.9.tar.gz", hash = "sha256:bc317b8789a69fb71b6037b7bb399560f060df42462e3f2f6630c79b152e5cc2", size = 3297, upload-time = "2026-04-23T19:28:57.291Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0a/3f/9d22409c6b20e8af69708675ff86eb119dae3ff35101ef3f4ecb4ca4db03/random_port-0.0.9-py3-none-any.whl", hash = "sha256:0f0ad971673e99fe19acece2b0a021df565515ef110a890e2c2becda565d0687", size = 4143, upload-time = "2026-04-23T19:28:55.965Z" },
 ]
 
 [[package]]

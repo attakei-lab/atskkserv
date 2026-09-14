@@ -13,12 +13,12 @@ proc processClient(client: AsyncSocket) {.async.} =
     # 現時点ではエコーするだけ。
     await client.send(line)
 
-proc serve*(port: int) {.async.} =
+proc serve*(host: string, port: int) {.async.} =
   ## サーバープロセスの待ち受け
   clients = @[]
   var server = newAsyncSocket()
   server.setSockOpt(OptReuseAddr, true)
-  server.bindAddr(Port(port))
+  server.bindAddr(Port(port), host)
   server.listen()
 
   echo("Start waiting.")

@@ -8,6 +8,7 @@ from subprocess import Popen, run
 from typing import TYPE_CHECKING
 
 import pytest
+from random_port.pool import TcpRandomPort
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -30,8 +31,9 @@ def skk_server() -> Generator[Address]:
         ret = run(["nimble", "build"], cwd=_ROOT, check=False)
         assert ret.returncode == 0, "`nimble build` is failure."
 
-    proc = Popen([str(_BIN_PATH)])
-    yield "localhost", 11178
+    port = TcpRandomPort().value()
+    proc = Popen([str(_BIN_PATH), f"--server-port={port}"])
+    yield "localhost", port
     print("Stopping")
     proc.send_signal(signal.SIGINT)
 
