@@ -7,7 +7,15 @@ type
     HOST = 3
 
   Command* = object
-    code*: CommandCode
+    case code*: CommandCode
+    of CommandCode.REQUEST:
+      body*: string
+    else:
+      discard
+
+  LookupCode* = enum
+    FOUND = "1"
+    NOT_FOUND = "4"
 
 proc newCommand*(code: CommandCode): Command =
   result = Command(code: code)

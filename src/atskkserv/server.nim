@@ -1,11 +1,16 @@
 ## サーバープロセスの処理
-import std/[asyncnet, asyncdispatch, options]
+import std/[asyncnet, asyncdispatch, encodings, options, strutils]
 import chronicles
 
+import ./engine
 import ./skk/protocol
 
+var searchEngine {.threadvar.}: SearchEngine
 var clients {.threadvar.}: seq[AsyncSocket]
 ## 接続中のクライアントソケット
+
+proc closeSearchEngine*() =
+  searchEngine.close()
 
 proc closeAllClients*() =
   ## 接続中の全クライアントを切断する
@@ -22,17 +27,31 @@ proc removeClient(client: AsyncSocket) =
     clients.delete(idx)
 
 proc recvCommand(client: AsyncSocket): Future[Option[Command]] {.async.} =
-  let line = await client.recv(1)
-  if line.len == 0:
+  let buf = await client.recv(1)
+  if buf.len == 0:
     return none(Command)
-  case line
+  case buf
   of "0":
     result = some(newCommand(CommandCode.END))
+  of "1":
+    var command = newCommand(CommandCode.REQUEST)
+    var body = ""
+    while true:
+      let sbuf = await client.recv(1)
+      if sbuf.len == 0:
+        return none(Command)
+      if sbuf == " ":
+        break
+      else:
+        body = body & sbuf
+    command.body = body
+    return some(command)
   of "2":
     return some(newCommand(CommandCode.VERSION))
   of "3":
     return some(newCommand(CommandCode.HOST))
   else:
+    debug "Unknown token in receive command", chars = buf
     return none(Command)
 
 proc processClient(client: AsyncSocket) {.async.} =
@@ -47,7 +66,20 @@ proc processClient(client: AsyncSocket) {.async.} =
       debug "Receive 'END' command"
       break
     of CommandCode.REQUEST:
-      continue
+      let
+        body = command.get().body
+        ubody = convert(body, "utf-8", "euc-jp")
+      debug "Receive 'REQUEST' command", body = ubody
+      let candicates = searchEngine.lookup(ubody)
+      if candicates.len > 0:
+        debug "Candicates are found", num = candicates.len
+        await client.send(
+          "$1/$2/\n" %
+            [$LookupCode.FOUND, convert(candicates.join("/"), "euc-jp", "utf-8")]
+        )
+      else:
+        debug "Candicates are not found"
+        await client.send("$1$2 " % [$LookupCode.NOT_FOUND, body])
     of CommandCode.VERSION:
       debug "Receive 'VERSION' command"
       await client.send("atskkserv/0.0.0 ")
@@ -59,9 +91,10 @@ proc processClient(client: AsyncSocket) {.async.} =
   removeClient(client)
   debug "Client disconneccted", total = clients.len
 
-proc serve*(host: string, port: int) {.async.} =
+proc serve*(engine: SearchEngine, host: string, port: int) {.async.} =
   ## サーバープロセスの待ち受け
   clients = @[]
+  searchEngine = engine
   var server = newAsyncSocket()
   server.setSockOpt(OptReuseAddr, true)
   server.bindAddr(Port(port), host)
