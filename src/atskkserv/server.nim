@@ -1,5 +1,6 @@
 ## サーバープロセスの処理
 import std/[asyncnet, asyncdispatch]
+import chronicles
 
 var clients {.threadvar.}: seq[AsyncSocket]
 ## 接続中のクライアントソケット
@@ -8,7 +9,7 @@ proc closeAllClients*() =
   ## 接続中の全クライアントを切断する
   for client in clients:
     if not client.isClosed():
-      echo("Closing...")
+      info "Closing all connections"
       client.close()
   clients.setLen(0)
 
@@ -32,7 +33,7 @@ proc processClient(client: AsyncSocket) {.async.} =
   if not client.isClosed():
     client.close()
   removeClient(client)
-  echo("Disconnected. " & $clients.len & " clients remain.")
+  debug "Client disconneccted", total = clients.len
 
 proc serve*(host: string, port: int) {.async.} =
   ## サーバープロセスの待ち受け
@@ -42,10 +43,10 @@ proc serve*(host: string, port: int) {.async.} =
   server.bindAddr(Port(port), host)
   server.listen()
 
-  echo("Start waiting.")
+  info "Waiting started"
   while true:
     let client = await server.accept()
     clients.add client
-    echo("Connected " & $clients.len & " clients.")
+    debug "Client conneccted", total = clients.len
 
     asyncCheck processClient(client)

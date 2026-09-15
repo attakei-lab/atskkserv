@@ -13,4 +13,5 @@ bin           = @["atskkserv"]
 # Dependencies
 
 requires "nim >= 2.2.0"
+requires "chronicles >= 0.12.4"
 requires "confutils >= 0.1.1"
