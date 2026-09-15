@@ -1,0 +1,49 @@
+current_version = "0.0.0"
+
+[[files]]
+path = "atskkserv.nimble"
+search = "version = \"{{current_version}}\""
+replace = "version = \"{{new_version}}\""
+
+[[files]]
+path = "pyproject.toml"
+search = "version = \"{{current_version}}\""
+replace = "version = \"{{new_version}}\""
+
+[[files]]
+path = "docs/conf.py"
+search = "release = \"{{current_version}}\""
+replace = "release = \"{{new_version}}\""
+
+[[files]]
+path = "CHANGELOG.md"
+search = "Current changes:"
+replace = """
+Current changes:
+
+## v{{new_version}}
+
+{{nowFormat.dateISO}} (Asia/Tokyo)
+
+### Breaking changes
+
+### Features
+
+### Fixes
+
+### Others
+"""
+
+# This file has other replace target, but currently not supported.
+[[files]]
+path = ".github/release-body.md"
+regex = true
+search = """
+- Changelog is https://github.com/attakei-lab/atskkserv/blob/v{{current_version}}/CHANGELOG.md
+- Source changes is (.+)
+"""
+replace = """
+- Changelog is https://github.com/attakei-lab/atskkserv/blob/v{{new_version}}/CHANGELOG.md
+- Source changes is https://github.com/attakei-lab/atskkserv/compare/v{{current_version}}...v{{new_version}}
+"""
+
