@@ -1,10 +1,11 @@
-import ./skk/dictionary
+import ./skk/memfile_dict
 
 type SearchEngine* = object
-  dict: SkkDict
+  ## 複合ルートによる見出し語の変換候補検索エンジン
+  dict: SkkMemfileDict
 
-proc initSearchEngine*(dictionaryPath: string): SearchEngine =
-  result.dict = openDict(dictionaryPath)
+proc initSearchEngine*(path: string): SearchEngine =
+  result.dict = openDict(path)
 
 proc close*(engine: var SearchEngine) =
   engine.dict.close()
