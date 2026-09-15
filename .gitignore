@@ -1,3 +1,6 @@
+# 統合SKK辞書ファイルの初期出力場所
+SKK-JISYO.utf8
+
 # NeoVim用設定
 .nvim.lua
 
