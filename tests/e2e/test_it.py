@@ -33,31 +33,34 @@ def recv_all(sock: socket.socket, bufsize: int = 256, idle_timeout: float = 0.5)
 
 
 def test_connect(skk_client: socket.socket):
-    skk_client.send(b"HELLO")
-    assert recv_all(skk_client) == b"HELLO"
+    skk_client.send(b"3")
+    assert recv_all(skk_client) == b": "
 
+def test_invalid_sending(skk_client: socket.socket):
+    skk_client.send(b"HELO")
+    assert recv_all(skk_client) == b""
+
+def test_disconnect(skk_client: socket.socket):
+    skk_client.send(b"0")
+    assert recv_all(skk_client) == b""
 
 def test_multiple_connect(skk_server: Address):
     """同時接続性のテスト。"""
-    texts = [
-        b"HELLO",
-        b"SKK",
-        b"WORLD",
-    ]
-    barrier = threading.Barrier(len(texts))
+    num = 10
+    barrier = threading.Barrier(num)
 
-    def worker(data: bytes):
+    def worker():
         barrier.wait()
         with socket.create_connection(skk_server, timeout=1) as s:
-            s.send(data)
+            s.send(b"2")
             return recv_all(s)
 
-    with cf.ThreadPoolExecutor(len(texts)) as ex:
+    with cf.ThreadPoolExecutor(num) as ex:
         results = [
             f.result()
             for f in [
-                ex.submit(worker, t)
-                for t in texts
+                ex.submit(worker)
+                for _ in range(num)
             ]
         ]
-        assert sorted(results) == sorted(texts)
+        assert len(set(results)) == 1

@@ -1,6 +1,8 @@
 ## サーバープロセスの処理
-import std/[asyncnet, asyncdispatch]
+import std/[asyncnet, asyncdispatch, options]
 import chronicles
+
+import ./skk/protocol
 
 var clients {.threadvar.}: seq[AsyncSocket]
 ## 接続中のクライアントソケット
@@ -19,17 +21,39 @@ proc removeClient(client: AsyncSocket) =
   if idx >= 0:
     clients.delete(idx)
 
+proc recvCommand(client: AsyncSocket): Future[Option[Command]] {.async.} =
+  let line = await client.recv(1)
+  if line.len == 0:
+    return none(Command)
+  case line
+  of "0":
+    result = some(newCommand(CommandCode.END))
+  of "2":
+    return some(newCommand(CommandCode.VERSION))
+  of "3":
+    return some(newCommand(CommandCode.HOST))
+  else:
+    return none(Command)
+
 proc processClient(client: AsyncSocket) {.async.} =
   ## 接続中クライアントからの通信対応
   while not client.isClosed():
-    # Nimの ``recv`` は引数に指定したサイズを受信するまで待ち続ける。
-    let line = await client.recv(1)
-    if line.len == 0:
-      # 相手側からの切断(EOF)を検知した場合はループを抜ける。
+    let command = await recvCommand(client)
+    if command.isNone:
+      debug "Command not found"
       break
-    # 最低限「単なるTCPサーバーとして稼動する」を前提としており、
-    # 現時点ではエコーするだけ。
-    await client.send(line)
+    case command.get().code
+    of CommandCode.END:
+      debug "Receive 'END' command"
+      break
+    of CommandCode.REQUEST:
+      continue
+    of CommandCode.VERSION:
+      debug "Receive 'VERSION' command"
+      await client.send("atskkserv/0.0.0 ")
+    of CommandCode.HOST:
+      debug "Receive 'HOST' command"
+      await client.send(": ")
   if not client.isClosed():
     client.close()
   removeClient(client)
