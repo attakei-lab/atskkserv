@@ -1,0 +1,23 @@
+---
+packatskkservs:
+  - type: github_release
+    repo_owner: attakei-lab
+    repo_name: atskkserv
+    description: My SKK dictionary server
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: atskkserv-{{.Version}}_{{.OS}}_x86-64.{{.Format}}
+        files:
+          - name: atskkserv
+            src: atskkserv-{{.Version}}/atskkserv
+        format: zip
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: darwin
+            asset: atskkserv-{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+          - windows/amd64
