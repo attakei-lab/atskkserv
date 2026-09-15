@@ -4,7 +4,7 @@ import platform
 import signal
 import socket
 from pathlib import Path
-from subprocess import TimeoutExpired, Popen, run
+from subprocess import Popen, TimeoutExpired, run
 from time import monotonic, sleep
 from typing import TYPE_CHECKING
 
@@ -17,7 +17,9 @@ if TYPE_CHECKING:
     type Address = tuple[str, int]
 
 _ROOT = Path(__file__).parents[2]
-_BIN_PATH = _ROOT / "dist" / f"atskkserv{'.exe' if platform.system() == 'Windows' else ''}"
+_BIN_PATH = (
+    _ROOT / "dist" / f"atskkserv{'.exe' if platform.system() == 'Windows' else ''}"
+)
 _STARTUP_TIMEOUT = 5.0
 _SHUTDOWN_TIMEOUT = 5.0
 

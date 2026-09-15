@@ -34,3 +34,14 @@ pre-commit:
     - name: 'textlint'
       glob: '*.{md,rst}'
       run: 'uv run bunx --bun textlint {staged_files}'
+    - name: 'Python'
+      glob: '*.py'
+      group:
+        parallel: false
+        jobs:
+          - name: 'Ruff format'
+            run: '{run_python} ruff format {staged_files}'
+          - name: 'Ruff lint'
+            run: '{run_python} ruff check --fix {staged_files}'
+          - name: 'Pyrefly'
+            run: '{run_python} pyrefly check {staged_files}'

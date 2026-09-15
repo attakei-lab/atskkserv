@@ -1,16 +1,16 @@
 # Configuration file for the Sphinx documentation builder.
 # -- Project information
-project = 'atskkserv'
-copyright = '2026, Kazuya Takei'
-author = 'Kazuya Takei'
-release = '0.0.0'
+project = "atskkserv"
+copyright = "2026, Kazuya Takei"
+author = "Kazuya Takei"
+release = "0.0.0"
 
 # -- General configuration
 extensions = []
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-language = 'ja'
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+language = "ja"
 
 # -- Options for HTML output
-html_theme = 'alabaster'
-html_static_path = ['_static']
+html_theme = "alabaster"
+html_static_path = ["_static"]

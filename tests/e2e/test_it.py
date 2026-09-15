@@ -9,7 +9,9 @@ if TYPE_CHECKING:
     from .conftest import Address
 
 
-def recv_all(sock: socket.socket, bufsize: int = 256, idle_timeout: float = 0.5) -> bytes:
+def recv_all(
+    sock: socket.socket, bufsize: int = 256, idle_timeout: float = 0.5
+) -> bytes:
     """ソケットからデータが届かなくなるまで受信し続ける。
 
     サーバー実装がバイト単位で分割送信することがあるため、
@@ -36,13 +38,16 @@ def test_connect(skk_client: socket.socket):
     skk_client.send(b"3")
     assert recv_all(skk_client) == b": "
 
+
 def test_invalid_sending(skk_client: socket.socket):
     skk_client.send(b"HELO")
     assert recv_all(skk_client) == b""
 
+
 def test_disconnect(skk_client: socket.socket):
     skk_client.send(b"0")
     assert recv_all(skk_client) == b""
+
 
 def test_multiple_connect(skk_server: Address):
     """同時接続性のテスト。"""
@@ -56,11 +61,5 @@ def test_multiple_connect(skk_server: Address):
             return recv_all(s)
 
     with cf.ThreadPoolExecutor(num) as ex:
-        results = [
-            f.result()
-            for f in [
-                ex.submit(worker)
-                for _ in range(num)
-            ]
-        ]
+        results = [f.result() for f in [ex.submit(worker) for _ in range(num)]]
         assert len(set(results)) == 1

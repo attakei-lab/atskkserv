@@ -30,3 +30,6 @@ rst2txtast = { index = "testpypi" }
 name = "testpypi"
 url = "https://test.pypi.org/simple/"
 explicit = true
+
+[tool.pyrefly]
+search-path = ["tests"]
