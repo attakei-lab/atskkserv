@@ -9,7 +9,7 @@ type BuildOptions* = object
   force* {.name: "force", defaultValue: false, desc: "Orverwrite merged dictionary".}:
     bool
   dest* {.
-    name: "dest", defaultValue: "./SKK-JISYO.utf8", desc: "Dictionary output path"
+    name: "dest", defaultValue: "./SKK-JISYO.utf-8", desc: "Dictionary output path"
   .}: string
   sources* {.argument, desc: "Source dictionary files and output path".}: seq[string]
 

@@ -12,7 +12,7 @@ type ServeOptions* = object
   serverPort* {.name: "server-port", defaultValue: 1178, desc: "Listen port number".}:
     int
   localDictionary* {.
-    argument, defaultValue: "./SKK-JISYO.utf8", desc: "Using dictionary path"
+    argument, defaultValue: "./SKK-JISYO.utf-8", desc: "Using dictionary path"
   .}: string
 
 proc handleInterrupt() {.noconv.} =
