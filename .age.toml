@@ -2,8 +2,8 @@ current_version = "0.0.0"
 
 [[files]]
 path = "atskkserv.nimble"
-search = "version = \"{{current_version}}\""
-replace = "version = \"{{new_version}}\""
+search = "version       = \"{{current_version}}\""
+replace = "version       = \"{{new_version}}\""
 
 [[files]]
 path = "pyproject.toml"
