@@ -18,8 +18,8 @@ jobs:
   build:
     runs-on: ${{ matrix.vm }}
     env:
-      package_name: 'age-${{ inputs.version || github.ref_name }}'
-      dist_name: 'age-${{ inputs.version || github.ref_name }}_${{ matrix.os_name }}_${{ matrix.cpu_name }}'
+      package_name: 'atskkserv-${{ inputs.version || github.ref_name }}'
+      dist_name: 'atskkserv-${{ inputs.version || github.ref_name }}_${{ matrix.os_name }}_${{ matrix.cpu_name }}'
     strategy:
       matrix:
         include:
