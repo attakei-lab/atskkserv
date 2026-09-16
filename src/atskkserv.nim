@@ -3,6 +3,7 @@ import std/asyncdispatch
 import confutils
 
 import ./atskkserv/cli
+import ./atskkserv/meta
 import ./atskkserv/commands/build
 import ./atskkserv/commands/serve
 
@@ -20,7 +21,7 @@ type
       buildOpts {.flatten.}: BuildOptions
 
 when isMainModule:
-  let appConf = AppConf.load()
+  let appConf = AppConf.load(version = AppVersion)
   init(appConf.globalOpts)
 
   case appConf.command
