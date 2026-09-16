@@ -21,7 +21,7 @@ charset = sjis
 indent_size = 2
 
 # 4 space indentation
-[*.{py,php,md,rs,toml}]
+[*.{py,php,rs,toml}]
 indent_size = 4
 
 # Tab indentation (no size specified)
