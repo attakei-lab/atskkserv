@@ -1,5 +1,5 @@
 ---
-packatskkservs:
+packages:
   - type: github_release
     repo_owner: attakei-lab
     repo_name: atskkserv
