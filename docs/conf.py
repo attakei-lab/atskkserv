@@ -3,7 +3,7 @@
 project = "atskkserv"
 copyright = "2026, Kazuya Takei"
 author = "Kazuya Takei"
-release = "0.0.0"
+release = "0.1.0"
 
 # -- General configuration
 extensions = []

@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.0.0"
+version       = "0.1.0"
 author        = "Kazuya Takei"
 description   = "attakei's SKK server"
 license       = "Apache-2.0"
