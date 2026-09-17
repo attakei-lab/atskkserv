@@ -4,12 +4,15 @@ Current changes:
 
 2026-09-16 (Asia/Tokyo)
 
-Initial release.
+初回リリース
 
 ### Breaking changes
 
 ### Features
 
-- `serve` command (new)
-  - Only support "sorted and utf-8 formatted" dictionary file.
+- `serve` コマンド (新規)
+  - 辞書サーバーとして通常の待ち受け機能を持つ。待ち受け時のアドレスとポートはオプションで指定可能。
+  - SKK辞書としては「UTF-8エンコードのソート済みのもの」のみをサポートする。
 - `build` command (new)
+  - `serve` コマンドで使用する「UTF-8エンコードのソート済みのもの」に統合変換する。
+  - 統合対象のソースは「標準な辞書ファイル形式」で「EUC-JPエンコードであるもの」に限定されている。
