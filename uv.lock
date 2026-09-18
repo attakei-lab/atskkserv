@@ -41,7 +41,7 @@ dev = [
     { name = "pytest" },
     { name = "random-port" },
     { name = "rst2txtast" },
-    { name = "rstcheck" },
+    { name = "rstcheck", extra = ["sphinx"] },
     { name = "ruff" },
     { name = "sphinx" },
 ]
@@ -52,7 +52,7 @@ docs = [
 lint = [
     { name = "pyrefly" },
     { name = "rst2txtast" },
-    { name = "rstcheck" },
+    { name = "rstcheck", extra = ["sphinx"] },
     { name = "ruff" },
 ]
 test = [
@@ -69,7 +69,7 @@ dev = [
     { name = "pytest", specifier = ">=9.1.1" },
     { name = "random-port", specifier = ">=0.0.9" },
     { name = "rst2txtast", specifier = ">=0.2.0.post1786625040", index = "https://test.pypi.org/simple/" },
-    { name = "rstcheck", specifier = ">=6.3.0" },
+    { name = "rstcheck", extras = ["sphinx"], specifier = ">=6.3.0" },
     { name = "ruff", specifier = ">=0.16.7" },
     { name = "sphinx", specifier = ">=9" },
 ]
@@ -80,7 +80,7 @@ docs = [
 lint = [
     { name = "pyrefly", specifier = ">=1.3.1" },
     { name = "rst2txtast", specifier = ">=0.2.0.post1786625040", index = "https://test.pypi.org/simple/" },
-    { name = "rstcheck", specifier = ">=6.3.0" },
+    { name = "rstcheck", extras = ["sphinx"], specifier = ">=6.3.0" },
     { name = "ruff", specifier = ">=0.16.7" },
 ]
 test = [
@@ -495,6 +495,11 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/0a/3e/54182f5a310e0e2eb287170eb590bb93011161e28e51aa499120ab5c9318/rstcheck-6.3.0.tar.gz", hash = "sha256:583072b43939627b1b0f4492e8af2587092efc1fb5e9f0228fa2df9ea3b44873", size = 30887, upload-time = "2026-07-28T19:49:07.054Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/44/13/8bdf4e9f028e147ebabd8e093d30b0bc6e70ebbcfa9dbd9b93861e7315cd/rstcheck-6.3.0-py3-none-any.whl", hash = "sha256:3c1d8753b5dc01c33d114711552b2c4855fde00e0713f5a8341d7aaab2777058", size = 8999, upload-time = "2026-07-28T19:49:05.664Z" },
+]
+
+[package.optional-dependencies]
+sphinx = [
+    { name = "sphinx" },
 ]
 
 [[package]]
