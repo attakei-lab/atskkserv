@@ -22,11 +22,14 @@ atskkservがSKKサーバーとして動作する際には専用の辞書ファ�
 基本的な使い方
 ==============
 
+まずは `SKK辞書の配布サイト <https://skk-dev.github.io/dict/>`_
+などから辞書ファイルを入手してください。
+
 .. code:: console
 
-   atskkserv build SKK-JISYO.S SKK-JISYO.name ...
+   atskkserv build SKK-JISYO.S SKK-JISYO.jinmei ...
 
 ``build`` 以下の引数には、「統合対象の辞書ファイル」を指定します。(複数個指定が可能)
-問題なく処理が進めば、 ``SKK-JISYO.utf-8`` というファイルがコマンド実行のディレクトリに生成されています。
+問題なく処理が進めば、 ``SKK-JISYO.utf-8`` というファイルがコマンド実行のディレクトリに生成されます。
 
 なお、統合対象の辞書ファイルは、文字コードにEUC-JPを使用している必要があります。

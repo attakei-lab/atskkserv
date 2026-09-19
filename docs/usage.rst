@@ -12,6 +12,6 @@
    :maxdepth: 1
 
    usage/install
-   usage/build-dictionnary
+   usage/build-dictionary
    usage/run-server
 
