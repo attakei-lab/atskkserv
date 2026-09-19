@@ -8,6 +8,7 @@ release = "0.1.0"
 # -- General configuration
 extensions = [
     # Sphinx bundled extensions
+    "sphinx.ext.githubpages",
     "sphinx.ext.todo",
     # My public extensions
     "atsphinx.footnotes",
