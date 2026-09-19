@@ -39,11 +39,11 @@ Current changes:
 path = ".github/release-body.md"
 regex = true
 search = """
-- Changelog is https://github.com/attakei-lab/atskkserv/blob/v{{current_version}}/CHANGELOG.md
+- Changelog is https://github.com/attakei/atskkserv/blob/v{{current_version}}/CHANGELOG.md
 - Source changes is (.+)
 """
 replace = """
-- Changelog is https://github.com/attakei-lab/atskkserv/blob/v{{new_version}}/CHANGELOG.md
-- Source changes is https://github.com/attakei-lab/atskkserv/compare/v{{current_version}}...v{{new_version}}
+- Changelog is https://github.com/attakei/atskkserv/blob/v{{new_version}}/CHANGELOG.md
+- Source changes is https://github.com/attakei/atskkserv/compare/v{{current_version}}...v{{new_version}}
 """
 

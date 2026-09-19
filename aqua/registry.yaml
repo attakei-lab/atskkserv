@@ -1,7 +1,7 @@
 ---
 packages:
   - type: github_release
-    repo_owner: attakei-lab
+    repo_owner: attakei
     repo_name: atskkserv
     description: My SKK dictionary server
     version_constraint: "false"
