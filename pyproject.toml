@@ -2,7 +2,9 @@
 name = "atskkserv"
 version = "0.1.0"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "myst-parser>=5.1.0",
+]
 
 [dependency-groups]
 dev = [
